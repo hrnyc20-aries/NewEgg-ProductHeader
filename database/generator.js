@@ -2,6 +2,7 @@ var faker = require("faker");
 
 let counter = 1;
 
+
 let generation = function() {
   let output = [];
 
@@ -26,8 +27,8 @@ let generation = function() {
       categories: categoryName(),
       // nest options into categories
       /**
-       * categories: {categoryIterator: 1, 
-       *              category: "lorem ipsum", 
+       * categories: {categoryIterator: 1,
+       *              category: "lorem ipsum",
        *              options: [{catID: 1
        *                         options: lorem ipsum},
        *                        {catID: 1,
@@ -64,12 +65,12 @@ let multipleImg = function() {
 
 let categoryName = function() {
   let output = [];
-  
+
   //random number between 1-7 for for loop upper limit
   for (let i = 1; i < getRandomInt(1, 4); i++) {
-    output.push({ 
+    output.push({
       categoryIterator: i,
-      category: faker.lorem.word(), 
+      category: faker.lorem.word(),
       options: optionCategories(counter)
     });
     counter++
@@ -103,5 +104,5 @@ let shipOrigin = function() {
   let array = ["mexico", "canada", "united states of america"];
   return array[getRandomInt(0, 2)];
 };
- 
+
 module.exports = generation();
