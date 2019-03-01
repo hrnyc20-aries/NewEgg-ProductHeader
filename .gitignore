@@ -3,6 +3,8 @@ node_modules
 
 # configuration keys; API KEYS, AWS SSH KEYS
 config.js
+# fake data for postgresql in CSV format
+*.CSV
 
 # db files, save db files into github
 # productHeader.db
