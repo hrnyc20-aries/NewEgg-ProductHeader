@@ -1,98 +1,112 @@
 var faker = require('faker');
 var fs = require('fs');
 const { PerformanceObserver, performance } = require('perf_hooks');
-let startTime = new Date();
-console.log('start', startTime);
-let start = performance.now();
-console.log('perfromance start', start);
-//product
-let productStart = 1;
-let productEnd = 500000;
 
-let categoryQty = 4000;
-let descriptionQty = 900000;
-let imgQty = 200000;
-let optionQty = 500;
+const Pool = require('pg').Pool;
+const pool = new Pool({
+	user: 'bradleymorgan',
+	host: 'localhost',
+	database: 'newegg',
+	password: '',
+	port: 5432
+});
+// time marker for measuring time required for execution
+let startTime = performance.now();
 
-// let category = () => {
-// 	let count = 0;
-// 	let str = '';
-// 	while (count < categoryQty) {
-// 		count++;
-// 		str += count + ','; // category id
-// 		str += faker.lorem.word() + ','; // category name
-// 		str +=
-// 			faker.random.number({
-// 				min: 1,
-// 				max: productQty
-// 			}) + ','; // referencing product id
-// 		str += '\n';
-// 	}
-// 	return str;
-// };
-// stream = fs.createWriteStream(__dirname + 'category.csv');
-// stream.write(category());
+// DB connection and rows copy
+let poolConnection = () => {
+	pool.connect((err, client, done) => {
+		if (err) {
+			console.log('err on pool connection in DB', err);
+		} else {
+			client.query(
+				`COPY product FROM '/Users/bradleymorgan/Desktop/hrnyc20/NewEgg-ProductHeader/database/product.csv' DELIMITER '|' CSV`,
+				(err, result) => {
+					if (err) {
+						console.log('error on query ', err);
+					}
+				}
+			);
+		}
+	});
+};
 
-// let description = () => {
-// 	let count = 0;
-// 	let str = '';
-// 	while (count < descriptionQty) {
-// 		count++;
-// 		str += count + ','; // description id
-// 		str += faker.lorem.sentence() + ','; //description bullet
-// 		str +=
-// 			faker.random.number({
-// 				min: 1,
-// 				max: productQty
-// 			}) + ','; //referencing product id
-// 		str += '\n';
-// 	}
-// 	return str;
-// };
-// stream = fs.createWriteStream(__dirname + 'description.csv');
-// stream.write(description());
+// row range in millions, starting at 1, ending at 10M, with 1M per batch
+let start = 5000000;
+let end = 6000000;
 
-// let image = () => {
-// 	let count = 0;
-// 	let str = '';
-// 	while (count < imgQty) {
-// 		count++;
-// 		str += count + ','; // image id
-// 		str += faker.image.image() + ','; // images
-// 		str +=
-// 			faker.random.number({
-// 				min: 1,
-// 				max: productQty
-// 			}) + ','; // referencing product id
-// 		str += '\n';
-// 	}
-// 	return str;
-// };
-// var stream = fs.createWriteStream(__dirname + 'image.csv');
-// stream.write(image());
+// generating item categories
+let category = () => {
+	let str = '';
+	for (var i = start; i < end; i++) {
+		str += i + '|'; // category id
+		str += faker.lorem.word() + '|'; // category name
+		str +=
+			faker.random.number({
+				min: 1,
+				max: 10000000
+			}) + '\n'; // referencing product id
+	}
+	return str;
+};
+stream = fs.createWriteStream(`category.csv`);
+stream.write(category());
 
-// let option = () => {
-// 	let count = 0;
-// 	let str = '';
-// 	while (count < optionQty) {
-// 		count++;
-// 		str += count + ','; // option id
-// 		str += faker.lorem.word() + ','; // option name
-// 		str +=
-// 			faker.random.number({
-// 				min: 1,
-// 				max: productQty
-// 			}) + ','; // referencing product id
-// 		str += '\n';
-// 	}
-// 	return str;
-// };
-// stream = fs.createWriteStream(__dirname + 'option.csv');
-// stream.write(option());
+// generating item description bullets
+let description = () => {
+	let str = '';
+	for (var i = start; i < end; i++) {
+		str += i + '|'; // description id
+		str += faker.lorem.sentence() + '|'; //description bullet
+		str +=
+			faker.random.number({
+				min: 1,
+				max: 10000000
+			}) + '\n'; //referencing product id
+	}
+	return str;
+};
+stream = fs.createWriteStream(`description.csv`);
+stream.write(description());
 
+// generating images
+let image = () => {
+	let str = '';
+	for (var i = start; i < end; i++) {
+		str += i + '|'; // image id
+		str += faker.image.image() + '|'; // images
+		str +=
+			faker.random.number({
+				min: 1,
+				max: 10000000
+			}) + '\n'; // referencing product id
+	}
+	return str;
+};
+var stream = fs.createWriteStream(`image.csv`);
+stream.write(image());
+
+// generating options for items
+let option = () => {
+	let str = '';
+	for (var i = start; i < end; i++) {
+		str += i + '|'; // option id
+		str += faker.lorem.word() + '|'; // option name
+		str +=
+			faker.random.number({
+				min: 1,
+				max: 10000000
+			}) + '\n'; // referencing product id
+	}
+	return str;
+};
+stream = fs.createWriteStream(`option.csv`);
+stream.write(option());
+
+// generating items
 let product = () => {
 	let str = '';
-	for (var i = productStart; i < productEnd; i++) {
+	for (var i = start; i < end; i++) {
 		str += i + '|'; // product id - incrementor
 		str += faker.commerce.productName() + '|'; // product name
 		str += i + '|'; // item number - duplicates product id for some reason
@@ -107,22 +121,16 @@ let product = () => {
 		str += faker.random.number({ min: 0, max: 1 }) + '|'; // stock Status - 0 for false, 1 for true
 		str += faker.address.country() + '|'; // sell from - pick a country
 		str += faker.company.companyName() + '\n'; // ship origin - just a store name, use lorem word
-		// str += '\n';
 	}
 	return str;
 };
-
-stream = fs.createWriteStream('product.csv');
+stream = fs.createWriteStream(`product.csv`);
 stream.write(product());
 
-stream.end();
+// copy stream result to DB
+stream.end(null, null, poolConnection);
 
-//performance now - node hooks
-//cluster for now
-//DB replication sets
-let endTime = new Date();
-console.log('end', endTime);
-let end = performance.now();
-console.log('perfromance end', end);
-let timeTaken = (end - start) / 1000;
-console.log('timeTaken: ', timeTaken);
+// ending time marker
+let endTime = performance.now();
+let timeTaken = (endTime - startTime) / 1000;
+console.log('time taken:   ', timeTaken);
