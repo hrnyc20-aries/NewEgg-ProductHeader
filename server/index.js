@@ -75,11 +75,13 @@ app.get('/api/category/:id', (req, res) => {
 			console.log('err on pool connection in DB', err);
 		} else {
 			client.query(`SELECT * FROM category WHERE id_product = $1`, [req.params.id], (err, response) => {
-				if (err) {
-					console.log('error on query ', err);
-				} else {
-					res.send(response.rows);
-				}
+				err ? console.log('error on query category', err) : res.send(response.rows);
+
+				// if (err) {
+				// 	console.log('error on query ', err);
+				// } else {
+				// 	res.send(response.rows);
+				// }
 			});
 		}
 	});
