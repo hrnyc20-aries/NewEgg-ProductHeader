@@ -5,6 +5,7 @@ const axios = require('axios')
 const app = express();
 const cors = require('cors')
 const port = 3050;
+const parse = require('body-parser');
 
 app.use(cors())
 app.use(morgan('dev'));
