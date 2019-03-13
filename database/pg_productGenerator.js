@@ -15,10 +15,67 @@ const pool = new Pool({
 });
 
 // row range in millions, starting at 1, ending at 10M, with 1M per batch
-let start = 8000000;
-let end = 9000000;
+let start = 15000000;
+let end = 18000000;
 // time marker for measuring time required for execution
 let startTime = performance.now();
+
+// // generating item description bullets
+// let description = () => {
+// 	let str = '';
+// 	let x = 6000001;
+// 	for (var i = start; i < end; i++) {
+// 		str += i + '|'; // description id
+// 		str += faker.lorem.sentence() + '|'; //description bullet
+// 		str += x;
+// 		str += '\n';
+// 		// str +=
+// 		// 	faker.random.number({
+// 		// 		min: 8000000,
+// 		// 		max: 9000000
+// 		// 	}) + '\n'; //referencing product id
+// 		x++;
+// 	}
+// 	return str;
+// };
+
+// let descriptionGenerator = () => {
+// 	return new Promise((resolve, reject) => {
+// 		stream = fs.createWriteStream(`description5.csv`);
+// 		resolve(stream.write(description()));
+// 	});
+// };
+// descriptionGenerator();
+// // // stream = fs.createWriteStream(`description.csv`);
+// // // stream.write(description());
+
+// // // generating options for items
+// let option = () => {
+// 	let str = '';
+// 	let x = 6000001;
+// 	for (var i = start; i < end; i++) {
+// 		str += i + '|'; // option id
+// 		str += faker.lorem.word() + '|'; // option name
+// 		str += x;
+// 		str += '\n';
+// 		// str +=
+// 		// 	faker.random.number({
+// 		// 		min: 1,
+// 		// 		max: 10000000
+// 		// 	}) + '\n'; // referencing product id
+// 		x++;
+// 	}
+// 	return str;
+// };
+
+// let optionGenerator = () => {
+// 	return new Promise((resolve, reject) => {
+// 		stream = fs.createWriteStream(`option5.csv`);
+// 		resolve(stream.write(option()));
+// 	});
+// };
+
+optionGenerator();
 
 // DB connection and rows copy
 let poolConnection = async () => {
@@ -81,138 +138,100 @@ let poolConnection = async () => {
 
 // generating item categories
 
-let category = () => {
-	let str = '';
-	for (var i = start; i < end; i++) {
-		str += i + '|'; // category id
-		str += faker.lorem.word() + '|'; // category name
-		str +=
-			faker.random.number({
-				min: 1,
-				max: 10000000
-			}) + '\n'; // referencing product id
-	}
-	return str;
-};
+// let category = () => {
+// 	let str = '';
+// 	for (var i = start; i < end; i++) {
+// 		str += i + '|'; // category id
+// 		str += faker.lorem.word() + '|'; // category name
+// 		str +=
+// 			faker.random.number({
+// 				min: 8000000,
+// 				max: 9000000
+// 			}) + '\n'; // referencing product id
+// 	}
+// 	return str;
+// };
 
-let categoryGenerator = () => {
-	return new Promise((resolve, reject) => {
-		stream = fs.createWriteStream(`category.csv`);
-		resolve(stream.write(category()));
-	});
-};
+// let categoryGenerator = () => {
+// 	return new Promise((resolve, reject) => {
+// 		stream = fs.createWriteStream(`category_new0.csv`);
+// 		resolve(stream.write(category()));
+// 	});
+// };
 
-// generating item description bullets
-let description = () => {
-	let str = '';
-	for (var i = start; i < end; i++) {
-		str += i + '|'; // description id
-		str += faker.lorem.sentence() + '|'; //description bullet
-		str +=
-			faker.random.number({
-				min: 1,
-				max: 10000000
-			}) + '\n'; //referencing product id
-	}
-	return str;
-};
-
-let descriptionGenerator = () => {
-	return new Promise((resolve, reject) => {
-		stream = fs.createWriteStream(`description.csv`);
-		resolve(stream.write(description()));
-	});
-};
-// stream = fs.createWriteStream(`description.csv`);
-// stream.write(description());
+// categoryGenerator();
 
 // generating images
-let image = () => {
-	let str = '';
-	for (var i = start; i < end; i++) {
-		str += i + '|'; // image id
-		str += faker.image.image() + '|'; // images
-		str +=
-			faker.random.number({
-				min: 1,
-				max: 10000000
-			}) + '\n'; // referencing product id
-	}
-	return str;
-};
-let imageGenerator = () => {
-	return new Promise((resolve, reject) => {
-		stream = fs.createWriteStream(`image.csv`);
-		resolve(stream.write(image()));
-	});
-};
+// let image = () => {
+// 	let str = '';
+// 	let x = 6000000;
+// 	for (var i = start; i < end; i++) {
+// 		str += i + '|'; // image id
+// 		str += faker.image.image() + '|'; // images
+// 		str += x;
+// 		str += '\n';
+// 		// str +=
+// 		// 	faker.random.number({
+// 		// 		min: 1,
+// 		// 		max: 1000000
+// 		// 	}) + '\n'; // referencing product id
+// 		x++;
+// 	}
+// 	return str;
+// };
+// let imageGenerator = () => {
+// 	return new Promise((resolve, reject) => {
+// 		stream = fs.createWriteStream(`image5.csv`);
+// 		resolve(stream.write(image()));
+// 	});
+// };
 
+// imageGenerator();
 // var stream = fs.createWriteStream(`image.csv`);
 // stream.write(image());
 
-// generating options for items
-let option = () => {
-	let str = '';
-	for (var i = start; i < end; i++) {
-		str += i + '|'; // option id
-		str += faker.lorem.word() + '|'; // option name
-		str +=
-			faker.random.number({
-				min: 1,
-				max: 10000000
-			}) + '\n'; // referencing product id
-	}
-	return str;
-};
+// // stream = fs.createWriteStream(`option.csv`);
+// // stream.write(option());
 
-let optionGenerator = () => {
-	return new Promise((resolve, reject) => {
-		stream = fs.createWriteStream(`option.csv`);
-		resolve(stream.write(option()));
-	});
-};
-// stream = fs.createWriteStream(`option.csv`);
-// stream.write(option());
+// // generating items
+// let product = () => {
+// 	let str = '';
+// 	for (var i = start; i < end; i++) {
+// 		str += i + '|'; // product id - incrementor
+// 		str += faker.commerce.productName() + '|'; // product name
+// 		str += i + '|'; // item number - duplicates product id for some reason
+// 		str += faker.random.number({ min: 0, max: 5 }) + '|'; // reviewRate - item rating
+// 		str += faker.random.number({ min: 1, max: 3500 }) + '|'; // reviewNum - how many reviews are there for the specific item
+// 		str += faker.random.number({ min: 1, max: 100 }) + '|'; // questionNum - how many questions are there for the specific item
+// 		str += faker.random.number({ min: 1, max: 100 }) + '|'; // aswerNum - how many answers are there for the specific item
+// 		str += faker.random.number({ min: 1, max: 999 }) + '|'; // stock amount
+// 		str += faker.random.number({ min: 1, max: 10 }) + '|'; // sell limit
+// 		str += faker.random.number({ min: 5, max: 3000, precision: 0.01 }).toFixed(2) + '|'; // lowest price
+// 		str += faker.image.imageUrl() + '|'; //some logo overlay, not used on FE currently
+// 		str += faker.random.number({ min: 0, max: 1 }) + '|'; // stock Status - 0 for false, 1 for true
+// 		str += faker.address.country() + '|'; // sell from - pick a country
+// 		str += faker.company.companyName() + '\n'; // ship origin - just a store name, use lorem word
+// 	}
+// 	return str;
+// };
 
-// generating items
-let product = () => {
-	let str = '';
-	for (var i = start; i < end; i++) {
-		str += i + '|'; // product id - incrementor
-		str += faker.commerce.productName() + '|'; // product name
-		str += i + '|'; // item number - duplicates product id for some reason
-		str += faker.random.number({ min: 0, max: 5 }) + '|'; // reviewRate - item rating
-		str += faker.random.number({ min: 1, max: 3500 }) + '|'; // reviewNum - how many reviews are there for the specific item
-		str += faker.random.number({ min: 1, max: 100 }) + '|'; // questionNum - how many questions are there for the specific item
-		str += faker.random.number({ min: 1, max: 100 }) + '|'; // aswerNum - how many answers are there for the specific item
-		str += faker.random.number({ min: 1, max: 999 }) + '|'; // stock amount
-		str += faker.random.number({ min: 1, max: 10 }) + '|'; // sell limit
-		str += faker.random.number({ min: 5, max: 3000, precision: 0.01 }).toFixed(2) + '|'; // lowest price
-		str += faker.image.imageUrl() + '|'; //some logo overlay, not used on FE currently
-		str += faker.random.number({ min: 0, max: 1 }) + '|'; // stock Status - 0 for false, 1 for true
-		str += faker.address.country() + '|'; // sell from - pick a country
-		str += faker.company.companyName() + '\n'; // ship origin - just a store name, use lorem word
-	}
-	return str;
-};
+// let productGenerator = () => {
+// 	return new Promise((resolve, reject) => {
+// 		stream = fs.createWriteStream(`product.csv`);
+// 		resolve(stream.write(product()));
+// 	});
+// };
+// // stream = fs.createWriteStream(`product.csv`);
+// // stream.write(product());
 
-let productGenerator = () => {
-	return new Promise((resolve, reject) => {
-		stream = fs.createWriteStream(`product.csv`);
-		resolve(stream.write(product()));
-	});
-};
-// stream = fs.createWriteStream(`product.csv`);
-// stream.write(product());
-
-(async () => {
-	await productGenerator();
-	await imageGenerator();
-	await optionGenerator();
-	await descriptionGenerator();
-	await categoryGenerator();
-})();
-poolConnection();
+// (async () => {
+// 	await productGenerator();
+// 	await imageGenerator();
+// 	await optionGenerator();
+// 	await descriptionGenerator();
+// 	await categoryGenerator();
+// })();
+// poolConnection();
 // fs.unlink('/Users/bradleymorgan/Desktop/hrnyc20/NewEgg-ProductHeader/database/category.csv', err => {
 // 	if (err) throw err;
 // 	console.log('category.csv');
