@@ -15,7 +15,7 @@ app.get('*.js', function(req, res, next) {
 	next();
 });
 
-app.get('/loaderio-d0ad723afa8d625d753d334652f3897e', (req, res) => {
+app.get('/loaderio*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/../client/dist/loaderio-d0ad723afa8d625d753d334652f3897e.txt'));
 });
 
