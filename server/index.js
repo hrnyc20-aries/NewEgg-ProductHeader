@@ -4,16 +4,18 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 const pool = require('../database/pg_index.js');
+const compression = require('compression');
 const morgan = require('morgan');
 
+app.use(compression());
 app.use(cors());
-app.use(express.static(__dirname + '/../client/dist'));
-app.use(parser.json());
 app.get('*.js', function(req, res, next) {
 	req.url = req.url + '.gz';
 	res.set('Content-Encoding', 'gzip');
 	next();
 });
+app.use(express.static(__dirname + '/../client/dist'));
+app.use(parser.json());
 
 app.get('/loaderio*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/../client/dist/loaderio-d0ad723afa8d625d753d334652f3897e.txt'));
