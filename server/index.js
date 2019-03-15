@@ -18,7 +18,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(parser.json());
 
 app.get('/loaderio*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/../client/dist/loaderio-d0ad723afa8d625d753d334652f3897e.txt'));
+	res.sendFile(path.join(__dirname + '/../client/dist/loaderio-b1c72e3a83e23c3be254582b10dd16b4.txt'));
 });
 
 app.get('/:id', (req, res) => {
