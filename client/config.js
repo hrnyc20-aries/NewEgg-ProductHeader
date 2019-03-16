@@ -1,4 +1,4 @@
 module.exports = {
-	aws: 'ec2-34-198-228-224.compute-1.amazonaws.com'
+	aws: 'ec2-3-209-134-85.compute-1.amazonaws.com'
 	// aws: 'localhost:3010'
 };
